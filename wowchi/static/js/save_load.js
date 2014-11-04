@@ -78,8 +78,6 @@ wowchi.queue.subscribe(function() {
     });
     wowchi.save_queue();
 });
-wowchi.locale.subscribe(wowchi.update_realms);
-
 wowchi.save_queue = function() {
     try {
         var key = wowchi.locale().host + "." + wowchi.realm().name + "." + wowchi.character_name() + ".queue";
@@ -100,9 +98,11 @@ wowchi.find_obj = function(haystack, needle, key) {
     if (!needle) {
         return null;
     }
-    return _.find(haystack, function(l) {
+    var r = _.find(haystack, function(l) {
         return l[key] === needle[key];
     });
+    console.log(r);
+    return r;
 };
 wowchi.find_many = function(haystack, needles) {
     return _.filter(_.map(needles, function(needle) {
@@ -137,7 +137,9 @@ wowchi.find_achi = function(all, achi) {
 wowchi.load_from_storage = function() {
     if ('localStorage' in window && window.localStorage !== null) {
         wowchi.locale(wowchi.find_obj(wowchi.locales, JSON.parse(localStorage.locale || 'null'), 'locale'));
-        wowchi.realms(JSON.parse(localStorage.realms || '[]'));
+        wowchi.realms(_.map(JSON.parse(localStorage.realms || '[]'), function(r) {
+            return new Realm(r.name);
+        }));
         wowchi.realm(wowchi.find_obj(wowchi.realms(), JSON.parse(localStorage.realm || 'null'), 'name'));
         wowchi.character_name(JSON.parse(localStorage.character_name || 'null'));
         wowchi.character_class(JSON.parse(localStorage.character_class || '7'));
@@ -179,4 +181,5 @@ wowchi.load_from_storage = function() {
             localStorage.criteria = ko.toJSON(wowchi.criteria);
         });
     }
+    wowchi.locale.subscribe(wowchi.update_realms);
 };
