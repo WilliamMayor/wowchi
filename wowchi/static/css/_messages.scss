@@ -17,7 +17,13 @@
         }
 
         &.error {
-            background-color: #DA3754;
+            background-color: #D13A33;
+        }
+        &.warning {
+            background-color: #E4D12D;
+        }
+        &.success {
+            background-color: #4AA584;
         }
     }
 }

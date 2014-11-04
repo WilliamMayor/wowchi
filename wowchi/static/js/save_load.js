@@ -19,6 +19,14 @@ wowchi.achievements = function(wowchi) {
     }
 };
 wowchi.find = function() {
+    Rollbar.configure({
+      payload: {
+        person: {
+            id: wowchi.locale().locale + "." + wowchi.realm().name + "." + wowchi.character_name()
+        }
+      }
+    });
+    Rollbar.info("User finding data");
     wowchi.working(true);
     $.ajax(wowchi.url("/api/wow/data/character/achievements"), {
         dataType: "jsonp",
@@ -98,11 +106,9 @@ wowchi.find_obj = function(haystack, needle, key) {
     if (!needle) {
         return null;
     }
-    var r = _.find(haystack, function(l) {
+    return _.find(haystack, function(l) {
         return l[key] === needle[key];
     });
-    console.log(r);
-    return r;
 };
 wowchi.find_many = function(haystack, needles) {
     return _.filter(_.map(needles, function(needle) {
@@ -150,6 +156,15 @@ wowchi.load_from_storage = function() {
         wowchi.criteria(JSON.parse(localStorage.criteria || '[]'));
         wowchi.queue(wowchi.find_many(wowchi.available(), JSON.parse(localStorage.queue || '[]')));
 
+        Rollbar.configure({
+          payload: {
+            person: {
+                id: wowchi.locale().locale + "." + wowchi.realm().name + "." + wowchi.character_name()
+            }
+          }
+        });
+        Rollbar.info("User coming back");
+
         wowchi.locale.subscribe(function() {
             localStorage.locale = ko.toJSON(wowchi.locale);
         });
@@ -180,6 +195,8 @@ wowchi.load_from_storage = function() {
         wowchi.criteria.subscribe(function() {
             localStorage.criteria = ko.toJSON(wowchi.criteria);
         });
+    } else {
+        message.warning("Your browser doesn't have localStorage. This means your character data and achivement queue won't be saved for the next time you visit. Sorry.");
     }
     wowchi.locale.subscribe(wowchi.update_realms);
 };
