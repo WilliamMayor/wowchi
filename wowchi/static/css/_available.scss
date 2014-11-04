@@ -1,0 +1,47 @@
+#available {
+    position: absolute;
+    top: 178px;
+    left: 0px;
+    padding: 20px;
+    border-right-width: 5px;
+    border-right-style: solid;
+    ul.icons {
+        li {
+            display: inline;
+            margin: 5px;
+
+            img {
+                height: 36px;
+                width: 36px;
+                border-width: 2px;
+                border-style: solid;
+                border-color: transparent;
+                
+                filter: grayscale(100%);
+                -webkit-filter: grayscale(100%);
+                -moz-filter: grayscale(100%);
+                -ms-filter: grayscale(100%); 
+                -o-filter: grayscale(100%);
+
+                &.complete {
+                    filter: none;
+                    -webkit-filter: none;
+                    -moz-filter: none;
+                    -ms-filter: none; 
+                    -o-filter: none;
+                }
+            }
+        }
+    }
+    h2, h3 {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        margin-bottom: 10px;
+        a {
+            color: inherit;
+        }
+    }
+    .icons, .categories {
+        margin-left: 40px;
+    }
+}

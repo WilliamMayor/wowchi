@@ -1,0 +1,48 @@
+#queue {
+    position: absolute;
+    top: 82px;
+    left: 0;
+    right: 0;
+    height: 56px;
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+    padding: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    background-color: $base-background-color;
+
+    h2 {
+        height: 56px;
+        line-height: 56px;
+    }
+
+    li {
+        display: inline-block;
+        margin: 0 5px;
+        position: relative;
+
+        .remove {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            color: black;
+            display: none;
+
+            .fa-stack {
+                font-size: small;
+            }
+        }
+
+        &:hover {
+            .remove {
+                display: inline;
+            }
+        }
+    }
+
+    &.stuck {
+        position: fixed;
+        top: 0px;
+    }
+}

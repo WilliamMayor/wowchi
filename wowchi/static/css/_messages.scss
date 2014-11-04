@@ -1,0 +1,23 @@
+#messages {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    li {
+        width: 500px;
+        margin: 10px auto;
+        padding: 5px;
+        background-color: #bbb;
+        color: #242424;
+        border-width: 2px;
+        border-style: solid;
+        font-size: smaller;
+        .close {
+            float: right;
+            color: black;
+        }
+
+        &.error {
+            background-color: #DA3754;
+        }
+    }
+}
