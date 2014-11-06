@@ -156,14 +156,16 @@ wowchi.load_from_storage = function() {
         wowchi.criteria(JSON.parse(localStorage.criteria || '[]'));
         wowchi.queue(wowchi.find_many(wowchi.available(), JSON.parse(localStorage.queue || '[]')));
 
-        Rollbar.configure({
-          payload: {
-            person: {
-                id: wowchi.locale().locale + "." + wowchi.realm().name + "." + wowchi.character_name()
+        if (wowchi.locale() && wowchi.locale().locale && wowchi.realm() && wowchi.realm().name && wowchi.character_name()) {
+            Rollbar.configure({
+            payload: {
+                person: {
+                    id: wowchi.locale().locale + "." + wowchi.realm().name + "." + wowchi.character_name()
+                }
             }
-          }
-        });
-        Rollbar.info("User coming back");
+            });
+            Rollbar.info("User coming back");
+        }
 
         wowchi.locale.subscribe(function() {
             localStorage.locale = ko.toJSON(wowchi.locale);
