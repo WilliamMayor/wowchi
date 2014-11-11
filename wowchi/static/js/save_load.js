@@ -144,7 +144,7 @@ wowchi.load_from_storage = function() {
     if ('localStorage' in window && window.localStorage !== null) {
         wowchi.locale(wowchi.find_obj(wowchi.locales, JSON.parse(localStorage.locale || 'null'), 'locale'));
         wowchi.realms(_.map(JSON.parse(localStorage.realms || '[]'), function(r) {
-            return new Realm(r.name);
+            return new wowchi.Realm(r.name);
         }));
         wowchi.realm(wowchi.find_obj(wowchi.realms(), JSON.parse(localStorage.realm || 'null'), 'name'));
         wowchi.character_name(JSON.parse(localStorage.character_name || 'null'));

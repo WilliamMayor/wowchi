@@ -1,3 +1,12 @@
+wowchi.Category = function(data) {
+    var self = this;
+    self.data = data;
+
+    self.expand = function() {
+
+    };
+};
+
 wowchi.icon = function(name, size) { //18, 36, 56
     if (!size) {
         size = 36;

@@ -37,9 +37,9 @@
             </div>
 
             <div>
-                <button data-bind="click: find, disable: working">
-                    <span data-bind="ifnot: working">Find</span>
-                    <span data-bind="if: working"><i class="fa fa-spinner fa-spin fa-lg"></i></span>
+                <button data-bind="click: find_available, disable: working">
+                    <span data-bind="if: working() === 0">Find</span>
+                    <span data-bind="if: working() > 0"><i class="fa fa-spinner fa-spin fa-lg"></i></span>
                 </button>
             </div>
         </header>
@@ -49,65 +49,6 @@
                 <h2>Welcome to WoWchi</h2>
                 <p>Here you can track and plan your WoW achievements. What do you want to do next?</p>
                 <p>Get started by choosing your region and realm from the drop downs above. Then type in your character name and click find.</p>
-            </div>
-            <ul id="available" data-bind="visible: completed().length !== 0, foreach: available, style: { right: exploring() ? '340px' : '-5px' }">
-                <h2><a href="#" data-bind="text: $data.name, click: $root.open_category"></a></h2>
-                <div data-bind="if: $root.category_is_opened($data)">
-                    <ul class="icons" data-bind="foreach: $data.achievements">
-                        <li>
-                            <a href="#" data-bind="click: $root.explore_achi">
-                                <img data-bind="attr: {src: $root.icon($data.icon), title: $data.description},
-                                                css: {complete: $root.achi_is_completed($data),
-                                                      exploring: $root.is_exploring($data)}" />
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="categories" data-bind="foreach: $data.categories">
-                        <li>
-                            <h3><a href="#" data-bind="text: $data.name, click: $root.open_category"></a></h3>
-                            <div data-bind="if: $root.opened.indexOf($data.name) !== -1">
-                                <ul class="icons" data-bind="foreach: $data.achievements">
-                                    <li>
-                                        <a href="#" data-bind="click: $root.explore_achi">
-                                            <img data-bind="attr: {src: $root.icon($data.icon), title: $data.description},
-                                                            css: {complete: $root.achi_is_completed($data),
-                                                                  exploring: $root.is_exploring($data)}" />
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </ul>
-            <div id="exploring" data-bind="if: exploring, style: { right: exploring() ? '0px' : '-400px' }">
-                <a class="wowhead" 
-                   target="_blank" 
-                   data-bind="attr: {href: $root.wowhead_link}">
-                        <img src="http://cdn.zamimg.com/zul/1.0.x/icons/sites/wowhead.png" />
-                </a>
-                <a class="addtoqueue"
-                   href="#"
-                   data-bind="click: $root.add_to_queue,
-                              visible: $root.can_add_to_queue()">
-                        Add to Queue
-                </a>
-                <a class="close" href="#" data-bind="click: $root.close_explore"><i class="fa fa-times fa-fw fa-lg"></i></a>
-                <img class="icon" data-bind="attr: {src: $root.icon(exploring().icon, 56), title: exploring().description}" />
-                <div class="title" data-bind="text: exploring().title"></div>
-                <div class="description" data-bind="text: exploring().description"></div>
-                <div data-bind="if: exploring().reward">
-                    <div class="rewards" data-bind="text: exploring().reward"></div>
-                </div>
-                <div data-bind="if: exploring().criteria.length">
-                    <div class="criteria">
-                        <ul data-bind="foreach: exploring().criteria">
-                            <li class="criterion" data-bind="css: {'met': $root.criterion_met($data)}">
-                                <span data-bind="text: $data.description"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
             <div id="queue" data-bind="visible: completed().length !== 0">
                 <h2 data-bind="visible: queue().length === 0">Nothing in the queue :(</h2>
@@ -125,6 +66,56 @@
                     </li>
                 </ul>
             </div>
+            <script type="text/html" id="template-explore">
+                <img data-bind="attr: {src: icon_56, title: description, alt: title}" />
+                <div class="title" data-bind="text: title"></div>
+                <div class="description" data-bind="text: description"></div>
+                <a class="wowhead" 
+                   target="_blank" 
+                   data-bind="attr: {href: wowhead}">
+                        <img src="http://cdn.zamimg.com/zul/1.0.x/icons/sites/wowhead.png" />
+                </a>
+                <a class="addtoqueue"
+                   href="javascript:void(0)"
+                   data-bind="click: void(0),
+                              visible: true">
+                        Add to Queue
+                </a>
+                <div class="rewards" data-bind="text: reward || ''"></div>
+                <div class="criteria">
+                    <ul data-bind="foreach: criteria || []">
+                        <li class="criterion" data-bind="css: {'met': true}">
+                            <span data-bind="text: description"></span>
+                        </li>
+                    </ul>
+                </div>
+            </script>
+            <script type="text/html" id="template-category">
+                <li>
+                    <h2><a href="javascript:void(0)" data-bind="text: name, click: expand"></a></h2>
+                    <div data-bind="if: is_opened">
+                        <ul class="icons" data-bind="foreach: achievements">
+                            <li>
+                                <a href="javascript:void(0)" data-bind="click: explore">
+                                    <img data-bind="attr: {src: icon_36, title: description, alt: title},
+                                                    css: {complete: is_completed,
+                                                          exploring: is_exploring}" />
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="exploring" data-bind="if: explore">
+                            <div data-bind="template: {name: 'template-explore', data: explore}"></div>
+                        </div>
+                        <ul class="categories" data-bind="template: {name: 'template-category',
+                                                                     foreach: categories,
+                                                                     as: 'category'}"></ul>
+                    </div>
+                </li>
+            </script>
+            <ul id="available" data-bind="visible: completed().length !== 0,
+                                          template: {name: 'template-category',
+                                                     foreach: available,
+                                                     as: 'category'}"></ul>
             <ul id="messages"></ul>
         </main>
         <script>
