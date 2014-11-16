@@ -4,6 +4,7 @@ function Realm(name) {
 }
 function Criterion(details) {
     var self = this;
+    self.details = details;
 
     self.id = details.id;
     self.quantity = details.quantity;
@@ -14,6 +15,7 @@ function Achievement(category, details) {
     var self = this;
 
     self.category= category;
+    self.details = details;
     self.id = details.id;
     self.title = details.title;
     self.description = details.description;
@@ -40,6 +42,7 @@ function Achievement(category, details) {
 }
 function Category(details) {
     var self = this;
+    self.details = details;
 
     self.id = details.id;
     self.name = details.name;
@@ -67,10 +70,11 @@ function Wowchi() {
     self.less_work = function() {
         self.working(self.working() - 1);
     };
+
     self.locales = locales;
     self.races = races;
     self.classes = classes;
-    self.locale = ko.observable(self.locales[0]);
+    self.locale = ko.observable();
     self.realms = ko.observableArray();
     self.realm = ko.observable();
     self.character_name = ko.observable();
@@ -182,16 +186,99 @@ function Wowchi() {
         });
     };
     self.load = function() {
-        self.realm.subscribe(function() {
-            self.character_name("Vized");
-            self.find_available();
-        });
-
-        self.locale(self.locales[3]);
+        if ('localStorage' in window && window.localStorage !== null) {
+            var locale = window.localStorage.locale;
+            if (locale) {
+                var l = _.find(self.locales, function(l) {
+                    return l.country === locale;
+                });
+                if (l) {
+                    self.locale(l);
+                }
+            }
+            var realms = window.localStorage.realms;
+            if (realms) {
+                self.realms(_.map(JSON.parse(realms), function(r) {
+                    return new Realm(r.name);
+                }));
+            }
+            var realm = window.localStorage.realm;
+            if (realm) {
+                var r = _.find(self.realms(), function(r) {
+                    return r.name === realm;
+                });
+                if (r) {
+                    self.realm(r);
+                }
+            }
+            var character_name = window.localStorage.character_name;
+            if (character_name) {
+                self.character_name(character_name);
+            }
+            var character_race = window.localStorage.character_race;
+            if (character_race) {
+                self.character_race(JSON.parse(character_race));
+            }
+            var character_class = window.localStorage.character_class;
+            if (character_class) {
+                self.character_class(JSON.parse(character_class));
+            }
+            var available = window.localStorage.available;
+            if (available) {
+                self.available(_.map(JSON.parse(available), function(a) {
+                    return new Category(a);
+                }));
+            }
+            var completed = window.localStorage.completed;
+            if (completed) {
+                self.completed(JSON.parse(completed));
+            }
+            var criteria = window.localStorage.criteria;
+            if (criteria) {
+                self.criteria(_.map(JSON.parse(criteria), function(c) {
+                    return new Criterion(c);
+                }));
+            }
+        }
+        self.init_listeners();
+    };
+    self.init_listeners = function() {
+        self.locale.subscribe(self.find_realms);
+        if ('localStorage' in window && window.localStorage !== null) {
+            self.locale.subscribe(function() {
+                window.localStorage.locale = self.locale().country;
+            });
+            self.realms.subscribe(function() {
+                window.localStorage.realms = ko.toJSON(self.realms);
+            });
+            self.realm.subscribe(function() {
+                window.localStorage.realm = self.realm().name;
+            });
+            self.character_name.subscribe(function() {
+                window.localStorage.character_name = self.character_name();
+            });
+            self.character_class.subscribe(function() {
+                window.localStorage.character_class = self.character_class();
+            });
+            self.character_race.subscribe(function() {
+                window.localStorage.character_race = self.character_race();
+            });
+            self.available.subscribe(function() {
+                window.localStorage.available = ko.toJSON(_.map(self.available(), function(c) {
+                    return c.details;
+                }));
+            });
+            self.completed.subscribe(function() {
+                window.localStorage.completed = ko.toJSON(self.completed());
+            });
+            self.criteria.subscribe(function() {
+                window.localStorage.criteria = ko.toJSON(_.map(self.criteria(), function(c) {
+                    return c.details;
+                }));
+            });
+        }
     };
 
-
-    self.locale.subscribe(self.find_realms);
     self.load();
 }
 
