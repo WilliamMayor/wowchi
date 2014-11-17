@@ -5,7 +5,7 @@
             ul.icons {
                 li {
                     img {
-                        &.exploring {
+                        &.highlight {
                             border-color: $color;
                         }
                     }
@@ -19,11 +19,8 @@
                     }
                 }
             }
-        }
-        #exploring {
-            border-left-color: $color;
-            .rewards, .criteria {
-                border-top-color: $color;
+            .exploring {
+                border-color: $color;
             }
         }
         header {

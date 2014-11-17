@@ -18,7 +18,7 @@
                 -ms-filter: grayscale(100%); 
                 -o-filter: grayscale(100%);
 
-                &.complete, &.exploring, &:hover {
+                &.complete, &.highlight, &:hover {
                     filter: none;
                     -webkit-filter: none;
                     -moz-filter: none;
@@ -36,7 +36,7 @@
             color: inherit;
         }
     }
-    .icons, .categories {
+    .icons, .categories, .exploring {
         margin-left: 40px;
     }
 }
