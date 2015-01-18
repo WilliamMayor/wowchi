@@ -50,8 +50,13 @@ function Achievement(category, details) {
         }
     };
     self.add_to_queue = function() {
-        wowchi.queue.push(self);
+        if (self.can_add_to_queue()) {
+            wowchi.queue.push(self);
+        }
     };
+    self.can_add_to_queue = ko.pureComputed(function() {
+        return !self.is_completed() && self.is_not_in_queue();
+    });
     self.is_not_in_queue = ko.pureComputed(function() {
         return wowchi.queue.indexOf(self) === -1;
     });
