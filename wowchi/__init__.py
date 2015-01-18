@@ -25,6 +25,7 @@ js = Bundle(
     'js/vendor/knockout-3.2.0.js',
     'js/vendor/jquery-2.1.1.min.js',
     'js/vendor/underscore-min.js',
+    'js/vendor/jquery.scrollintoview.min.js',
     unminified_js,
     output='main.min.js')
 assets.register('js', js)

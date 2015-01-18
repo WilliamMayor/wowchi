@@ -41,7 +41,9 @@ function Achievement(category, details) {
         }
     };
     self.explore_in_queue = function() {
-        wowchi.queue_explore(self);
+        self.category.scroll_to(true);
+        self.category.open_recursively();
+        self.category.explore(self);
     };
     self.remove_from_queue = function() {
         wowchi.queue.remove(self);
@@ -61,9 +63,10 @@ function Achievement(category, details) {
         return wowchi.queue.indexOf(self) === -1;
     });
 }
-function Category(details) {
+function Category(details, parent) {
     var self = this;
     self.details = details;
+    self.parent = parent;
 
     self.id = details.id;
     self.name = details.name;
@@ -71,13 +74,26 @@ function Category(details) {
         return new Achievement(self, a);
     });
     self.categories = _.map(details.categories, function(c) {
-        return new Category(c);
+        return new Category(c, self);
     });
     self.explore = ko.observable();
     self.is_opened = ko.observable(false);
+    self.scroll_to = ko.observable(false);
 
     self.expand = function() {
         self.is_opened(!self.is_opened());
+    };
+    self.afterRenderExplore = function(elements) {
+        if (self.scroll_to()) {
+            $(elements).parents("li").scrollintoview();
+            self.scroll_to(false);
+        }
+    };
+    self.open_recursively = function() {
+        self.is_opened(true);
+        if (self.parent) {
+            self.parent.open_recursively();
+        }
     };
 }
 
