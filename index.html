@@ -103,7 +103,7 @@
                 </li>
             </script>
             <div id="available">
-                <div class="filters">
+                <div class="filters" data-bind="visible: completed().length !== 0">
                     <div class="search">
                         <i class="fa fa-fw fa-search"></i>
                         <input type="text" placeholder="Search..." data-bind="textInput: search_query" />
