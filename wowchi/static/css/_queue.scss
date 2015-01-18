@@ -1,12 +1,16 @@
 #queue {
-    min-height: 56px;
-    border-bottom-width: 5px;
-    border-bottom-style: solid;
+    height: 56px;
+    border-top-width: 5px;
+    border-top-style: solid;
     padding: 20px;
     overflow-x: auto;
-    overflow-y: hidden;
     white-space: nowrap;
     background-color: $base-background-color;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
     h2 {
         height: 56px;
@@ -35,10 +39,5 @@
                 display: inline;
             }
         }
-    }
-
-    &.stuck {
-        position: fixed;
-        top: 0px;
     }
 }

@@ -50,22 +50,6 @@
                 <p>Here you can track and plan your WoW achievements. What do you want to do next?</p>
                 <p>Get started by choosing your region and realm from the drop downs above. Then type in your character name and click find.</p>
             </div>
-            <div id="queue" data-bind="visible: completed().length !== 0">
-                <h2 data-bind="visible: queue().length === 0">Nothing in the queue :(</h2>
-                <ul class="icons" data-bind="foreach: queue">
-                    <li>
-                        <a href="javascript:void(0)" data-bind="click: explore_in_queue">
-                            <img data-bind="attr: {src: icon_56, title: description}" />
-                        </a>
-                        <a class="remove" href="#" data-bind="click: remove_from_queue">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-times fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
             <script type="text/html" id="template-explore">
                 <div class="top">
                     <img data-bind="attr: {src: icon_56, title: description, alt: title}" />
@@ -122,6 +106,22 @@
                                           template: {name: 'template-category',
                                                      foreach: available,
                                                      as: 'category'}"></ul>
+            <div id="queue" data-bind="visible: completed().length !== 0">
+                <h2 data-bind="visible: queue().length === 0">Nothing in the queue :(</h2>
+                <ul class="icons" data-bind="foreach: queue">
+                    <li>
+                        <a href="javascript:void(0)" data-bind="click: explore_in_queue">
+                            <img data-bind="attr: {src: icon_56, title: description}" />
+                        </a>
+                        <a class="remove" href="javascript:void(0)" data-bind="click: remove_from_queue">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-times fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <ul id="messages"></ul>
         </main>
         <script>
