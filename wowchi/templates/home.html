@@ -81,7 +81,7 @@
                 </div>
             </script>
             <script type="text/html" id="template-category">
-                <li>
+                <li data-bind="if: achievements().length">
                     <h2><a href="javascript:void(0)" data-bind="text: name, click: expand"></a></h2>
                     <div data-bind="if: is_opened">
                         <ul class="icons" data-bind="foreach: achievements">
@@ -102,10 +102,24 @@
                     </div>
                 </li>
             </script>
-            <ul id="available" data-bind="visible: completed().length !== 0,
-                                          template: {name: 'template-category',
-                                                     foreach: available,
-                                                     as: 'category'}"></ul>
+            <div id="available">
+                <div class="filters">
+                    <div class="search">
+                        <i class="fa fa-fw fa-search"></i>
+                        <input type="text" placeholder="Search..." data-bind="textInput: search_query" />
+                    </div>
+                    <div class="checkboxes">
+                        <div><input id="only_incomplete" type="checkbox" data-bind="checked: only_incomplete" />
+                        <label for="only_incomplete">Incomplete</label></div>
+                        <div><input id="only_reward" type="checkbox" data-bind="checked: only_reward" />
+                        <label for="only_reward">Has reward</label></div>
+                    </div>
+                </div>
+                <ul data-bind="visible: completed().length !== 0,
+                               template: {name: 'template-category',
+                                          foreach: available,
+                                          as: 'category'}"></ul>
+            </div>
             <div id="queue" data-bind="visible: completed().length !== 0">
                 <h2 data-bind="visible: queue().length === 0">Nothing in the queue :(</h2>
                 <ul class="icons" data-bind="foreach: queue">

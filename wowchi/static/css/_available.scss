@@ -48,4 +48,28 @@
     .icons, .categories, .exploring {
         margin-left: 40px;
     }
+
+    .filters {
+        text-align: center;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        .search {
+            display: inline-block;
+            width: 250px;
+            vertical-align: top;
+            input {
+                display: inline-block;
+                width: auto;
+            }
+        }
+        .checkboxes {
+            display: inline-block;
+            vertical-align: top;
+            input, label {
+                display: inline-block;
+            }
+        }
+    }
 }
