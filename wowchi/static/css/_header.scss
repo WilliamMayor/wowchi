@@ -4,6 +4,12 @@ header {
     border-bottom-width: 5px;
     border-bottom-style: solid;
     padding-top: 20px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
     div {
         text-align: left;
         display: inline-block;
