@@ -52,12 +52,12 @@
             </div>
             <div id="queue" data-bind="visible: completed().length !== 0">
                 <h2 data-bind="visible: queue().length === 0">Nothing in the queue :(</h2>
-                <ul data-bind="foreach: queue">
+                <ul class="icons" data-bind="foreach: queue">
                     <li>
-                        <a href="#" data-bind="click: $root.explore_achi">
-                            <img data-bind="attr: {src: $root.icon($data.icon, 56), title: $data.description}" />
+                        <a href="javascript:void(0)" data-bind="click: explore_in_queue">
+                            <img data-bind="attr: {src: icon_56, title: description}" />
                         </a>
-                        <a class="remove" href="#" data-bind="click: $root.remove_from_queue">
+                        <a class="remove" href="#" data-bind="click: remove_from_queue">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-times fa-stack-1x fa-inverse"></i>
@@ -65,6 +65,9 @@
                         </a>
                     </li>
                 </ul>
+                <div data-bind="if: explore">
+                    <div class="exploring" data-bind="template: {name: 'template-explore', data: explore}"></div>
+                </div>
             </div>
             <script type="text/html" id="template-explore">
                 <div class="top">
@@ -76,7 +79,7 @@
                 </div>
                 <div class="rewards" data-bind="text: reward || ''"></div>
                 <div class="criteria">
-                    <ul data-bind="foreach: criteria">
+                    <ul data-bind="foreach: criteria, css: {long: criteria.length > 10}">
                         <li class="criterion" data-bind="css: {met: is_completed}">
                             <span data-bind="text: description"></span>
                         </li>
@@ -90,8 +93,8 @@
                     </a>
                     <a class="addtoqueue"
                        href="javascript:void(0)"
-                       data-bind="click: void(0),
-                                  visible: true">
+                       data-bind="click: add_to_queue,
+                                  visible: is_not_in_queue">
                             Add to Queue
                     </a>
                 </div>

@@ -32,8 +32,11 @@
         margin: 5px 0;
     }
     .criteria {
-        @include columns(4);
+        .long {
+            @include columns(4);
+        }
         .criterion {
+            display: block;
             &.met {
                 text-decoration: line-through;
                 opacity: 0.7;

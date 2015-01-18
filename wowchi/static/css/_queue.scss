@@ -1,5 +1,5 @@
 #queue {
-    height: 56px;
+    min-height: 56px;
     border-bottom-width: 5px;
     border-bottom-style: solid;
     padding: 20px;
@@ -13,7 +13,7 @@
         line-height: 56px;
     }
 
-    li {
+    .icons li {
         display: inline-block;
         margin: 0 5px;
         position: relative;
