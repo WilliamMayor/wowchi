@@ -1,0 +1,36 @@
+$tablet-max: 930px;
+$phone-max: 500px;
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 77px;
+    @media(max-width: $tablet-max) {
+        height: 150px;
+    }
+    @media (max-width: $phone-max) {
+        height: 240px;
+    }
+}
+#available {
+    position: absolute;
+    top: 82px;
+    left: 0;
+    right: 0;
+    bottom: 101px;
+    @media(max-width: $tablet-max) {
+        top: 155px;
+    }
+    @media (max-width: $phone-max) {
+        top: 240px;
+    }
+}
+#queue {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 96px;
+}

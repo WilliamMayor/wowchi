@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>wowchi</title>
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+        
         {% assets "css" %}<link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />{% endassets %}
         <script>
         var _rollbarConfig = {
@@ -18,29 +18,32 @@
     </head>
     <body data-bind="attr: {class: character_class_faction}">
         <header>
-            <div>
-                <select data-bind="options: locales,
-                                   optionsText: 'country',
-                                   value: locale,
-                                   optionsCaption: 'Region...'" class="selectpicker"></select>
-            </div>
+            <div class="container">
+                <div class="where">
+                    <div class="item">
+                        <select data-bind="options: locales,
+                                           optionsText: 'country',
+                                           value: locale,
+                                           optionsCaption: 'Region...'" class="selectpicker"></select>
+                    </div>
 
-            <div>
-                <select data-bind="options: realms,
-                                   optionsText: 'name',
-                                   value: realm,
-                                   optionsCaption: 'Realm...'" class="selectpicker"></select>
-            </div>
+                    <div class="item">
+                        <select data-bind="options: realms,
+                                           optionsText: 'name',
+                                           value: realm,
+                                           optionsCaption: 'Realm...'" class="selectpicker"></select>
+                    </div>
+                </div>
+                <div class="who item">
+                    <input type="text" placeholder="Character name" data-bind="value: character_name" />
+                </div>
 
-            <div>
-                <input type="text" placeholder="Character name" data-bind="value: character_name" />
-            </div>
-
-            <div>
-                <button data-bind="click: find_available, disable: working">
-                    <span data-bind="if: working() === 0">Find</span>
-                    <span data-bind="if: working() > 0"><i class="fa fa-spinner fa-spin fa-lg"></i></span>
-                </button>
+                <div class="item">
+                    <button data-bind="click: find_available, disable: working">
+                        <span data-bind="if: working() === 0">Find</span>
+                        <span data-bind="if: working() > 0"><i class="fa fa-spinner fa-spin fa-lg"></i></span>
+                    </button>
+                </div>
             </div>
         </header>
 

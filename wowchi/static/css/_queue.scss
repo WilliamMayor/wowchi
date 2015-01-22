@@ -1,16 +1,10 @@
 #queue {
-    height: 96px;
     border-top-width: 5px;
     border-top-style: solid;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     background-color: $base-background-color;
-
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
 
     h2 {
         height: 56px;
