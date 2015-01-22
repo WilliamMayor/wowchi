@@ -1,9 +1,9 @@
 #queue {
-    height: 56px;
+    height: 96px;
     border-top-width: 5px;
     border-top-style: solid;
-    padding: 20px;
     overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;
     background-color: $base-background-color;
 
@@ -17,26 +17,32 @@
         line-height: 56px;
     }
 
-    .icons li {
-        display: inline-block;
-        margin: 0 5px;
-        position: relative;
+    .icons {
+        height: 56px;
+        margin-top: 10px;
+        margin-left: 5px;
+        li {
+            display: inline-block;
+            margin: 0 5px;
+            position: relative;
+            height: 56px;
 
-        .remove {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            color: black;
-            display: none;
-
-            .fa-stack {
-                font-size: small;
-            }
-        }
-
-        &:hover {
             .remove {
-                display: inline;
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                color: black;
+                display: none;
+
+                .fa-stack {
+                    font-size: small;
+                }
+            }
+
+            &:hover {
+                .remove {
+                    display: inline;
+                }
             }
         }
     }
