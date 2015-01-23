@@ -55,24 +55,24 @@
                     width: 440px;
                 }
             }
-        }
-
-        .where {
-            display: inline-block;
-            padding: 0;
-            maring: 0;
-            @media(max-width: $tablet-max) {
+            @media(max-width: $phone-max) {
                 display: block;
+                input {
+                    width: 250px;
+                }
             }
         }
-
-        .item {
-            display: inline-block;
-            vertical-align: middle;
-            margin: 20px;
-
-            @media (max-width: $phone-max) {
-                display: block;
+        .search {
+            i {
+                margin-right: -50px;
+            }
+            input {
+                padding-left: 30px;
+            }
+        }
+        .toggle {
+            select {
+                margin-top: 0;
             }
         }
     }

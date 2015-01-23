@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>wowchi</title>
-        
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         {% assets "css" %}<link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />{% endassets %}
         <script>
         var _rollbarConfig = {
@@ -113,19 +113,19 @@
                     </div>
                     <div class="toggle">
                         <select class="selectpicker incomplete">
+                            <option>Any Status</option>
                             <option>Incomplete</option>
                             <option>Complete</option>
                             <option>Nearly Complete</option>
-                            <option>Any Status</option>
                         </select>
                         <select class="selectpicker reward">
+                            <option>Any Reward</option>
                             <option>Has Reward</option>
                             <option>No Reward</option>
                             <option>Rewards Title</option>
                             <option>Rewards Pet</option>
                             <option>Rewards Mount</option>
                             <option>Rewards Other</option>
-                            <option>Any Reward</option>
                         </select>
                     </div>
                 </div>
