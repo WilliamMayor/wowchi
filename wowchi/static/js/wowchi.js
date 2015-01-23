@@ -25,9 +25,20 @@ function Achievement(category, details) {
     self.icon_56 = "http://media.blizzard.com/wow/icons/56/" + details.icon + ".jpg";
     self.wowhead = "http://www.wowhead.com/achievement=" + self.id;
     self.reward = details.reward;
+    if (!!self.reward && self.reward.indexOf("Title") === -1) console.log(self.reward);
     self.accountWide = details.accountWide;
     self.criteria = _.map(details.criteria, function(c) {
         return new Criterion(c);
+    });
+    self.pct_criteria_complete = ko.pureComputed(function() {
+        var max = self.criteria.length;
+        var actual = _.reduce(self.criteria, function(memo, c) {
+            if (c.is_completed()) {
+                memo++;
+            }
+            return memo;
+        }, 0);
+        return actual / max;
     });
     self.is_completed = ko.observable(false);
     self.is_exploring = ko.pureComputed(function() {
@@ -80,11 +91,34 @@ function Category(details, parent) {
             if (!!q) {
                 keep &= achi.title.toLowerCase().indexOf(q) !== -1;
             }
-            if (wowchi.only_incomplete()) {
-                keep &= !achi.is_completed();
+            switch (wowchi.filter_status()) {
+                case "incomplete":
+                    keep &= !achi.is_completed();
+                    break;
+                case "complete":
+                    keep &= achi.is_completed();
+                    break;
+                case "nearly":
+                    keep &= !achi.is_completed() && achi.pct_criteria_complete() >= 0.8 && achi.pct_criteria_complete() < 1;
+                    break;
+
             }
-            if (wowchi.only_reward()) {
-                keep &= !!achi.reward;
+            switch (wowchi.filter_reward()) {
+                case "has":
+                    keep &= !!achi.reward;
+                    break;
+                case "no":
+                    keep &= !achi.reward;
+                    break;
+                case "title":
+                    keep &= !!achi.reward && (achi.reward.indexOf("Title Reward: ") !== -1 || achi.reward.indexOf("Title: ") !== -1);
+                    break;
+                case "blueprint":
+                    keep &= !!achi.reward && achi.reward.toLowerCase().indexOf("blueprint") !== -1;
+                    break;
+                case "other":
+                    keep &= !!achi.reward && achi.reward.indexOf("Title Reward: ") === -1 && achi.reward.indexOf("Title: ") === -1 && achi.reward.toLowerCase().indexOf("blueprint") === -1;
+                    break;
             }
             return keep;
         });
@@ -95,6 +129,11 @@ function Category(details, parent) {
     self.explore = ko.observable();
     self.is_opened = ko.observable(false);
     self.scroll_to = ko.observable(false);
+    self.meets_filter = ko.pureComputed(function() {
+        return self.achievements().length > 0 || _.reduce(self.categories, function(memo, c) {
+            return memo || c.meets_filter();
+        }, false);
+    });
 
     self.expand = function() {
         self.is_opened(!self.is_opened());
@@ -135,8 +174,8 @@ function Wowchi() {
     self.character_race = ko.observable(2);
 
     self.search_query = ko.observable("");
-    self.only_incomplete = ko.observable(false);
-    self.only_reward = ko.observable(false);
+    self.filter_status = ko.observable("any");
+    self.filter_reward = ko.observable("any");
 
     self.completed = ko.observableArray();
     self.criteria = ko.observableArray();

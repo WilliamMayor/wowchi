@@ -84,7 +84,7 @@
                 </div>
             </script>
             <script type="text/html" id="template-category">
-                <li data-bind="if: achievements().length">
+                <li data-bind="if: meets_filter">
                     <h2><a href="javascript:void(0)" data-bind="text: name, click: expand"></a></h2>
                     <div data-bind="if: is_opened">
                         <ul class="icons" data-bind="foreach: achievements">
@@ -112,20 +112,19 @@
                         <input type="text" placeholder="Search..." data-bind="textInput: search_query" />
                     </div>
                     <div class="toggle">
-                        <select class="selectpicker incomplete">
-                            <option>Any Status</option>
-                            <option>Incomplete</option>
-                            <option>Complete</option>
-                            <option>Nearly Complete</option>
+                        <select class="selectpicker incomplete" data-bind="value: filter_status">
+                            <option value="any" >Any Status</option>
+                            <option value="incomplete" >Incomplete</option>
+                            <option value="complete" >Complete</option>
+                            <option value="nearly" >Nearly Complete</option>
                         </select>
-                        <select class="selectpicker reward">
-                            <option>Any Reward</option>
-                            <option>Has Reward</option>
-                            <option>No Reward</option>
-                            <option>Rewards Title</option>
-                            <option>Rewards Pet</option>
-                            <option>Rewards Mount</option>
-                            <option>Rewards Other</option>
+                        <select class="selectpicker reward" data-bind="value: filter_reward">
+                            <option value="any">Any Reward</option>
+                            <option value="has">Has Reward</option>
+                            <option value="no">No Reward</option>
+                            <option value="title">Rewards Title</option>
+                            <option value="blueprint">Rewards Blueprint</option>
+                            <option value="other">Rewards Other</option>
                         </select>
                     </div>
                 </div>
