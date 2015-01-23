@@ -111,11 +111,22 @@
                         <i class="fa fa-fw fa-search"></i>
                         <input type="text" placeholder="Search..." data-bind="textInput: search_query" />
                     </div>
-                    <div class="checkboxes">
-                        <div><input id="only_incomplete" type="checkbox" data-bind="checked: only_incomplete" />
-                        <label for="only_incomplete">Incomplete</label></div>
-                        <div><input id="only_reward" type="checkbox" data-bind="checked: only_reward" />
-                        <label for="only_reward">Has reward</label></div>
+                    <div class="toggle">
+                        <select class="selectpicker incomplete">
+                            <option>Incomplete</option>
+                            <option>Complete</option>
+                            <option>Nearly Complete</option>
+                            <option>Any Status</option>
+                        </select>
+                        <select class="selectpicker reward">
+                            <option>Has Reward</option>
+                            <option>No Reward</option>
+                            <option>Rewards Title</option>
+                            <option>Rewards Pet</option>
+                            <option>Rewards Mount</option>
+                            <option>Rewards Other</option>
+                            <option>Any Reward</option>
+                        </select>
                     </div>
                 </div>
                 <ul data-bind="visible: completed().length !== 0,

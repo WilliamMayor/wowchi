@@ -1,5 +1,6 @@
 #available {
     padding: 20px;
+    padding-top: 0;
     overflow-y: auto;
 
     ul.icons {
@@ -37,25 +38,41 @@
     }
 
     .filters {
-        text-align: center;
         padding-bottom: 20px;
         margin-bottom: 20px;
         border-bottom-width: 1px;
         border-bottom-style: solid;
-        .search {
+        .search, .toggle {
             display: inline-block;
-            width: 250px;
-            vertical-align: top;
-            input {
+            input, select {
                 display: inline-block;
-                width: auto;
+                width: 200px;
+                margin: 20px;
+            }
+            @media(max-width: $tablet-max) {
+                display: block;
+                input {
+                    width: 440px;
+                }
             }
         }
-        .checkboxes {
+
+        .where {
             display: inline-block;
-            vertical-align: top;
-            input, label {
-                display: inline-block;
+            padding: 0;
+            maring: 0;
+            @media(max-width: $tablet-max) {
+                display: block;
+            }
+        }
+
+        .item {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 20px;
+
+            @media (max-width: $phone-max) {
+                display: block;
             }
         }
     }

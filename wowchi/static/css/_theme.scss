@@ -28,9 +28,6 @@
         }
         header {
             border-bottom-color: $color;
-            select {
-                border-color: $color;
-            }
         }
         #queue {
             border-top-color: $color;
@@ -61,6 +58,9 @@
           &:focus {
             border-color: $color;
           }
+        }
+        select {
+            border-color: $color;
         }
     }
 }
