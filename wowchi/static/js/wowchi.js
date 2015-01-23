@@ -25,7 +25,6 @@ function Achievement(category, details) {
     self.icon_56 = "http://media.blizzard.com/wow/icons/56/" + details.icon + ".jpg";
     self.wowhead = "http://www.wowhead.com/achievement=" + self.id;
     self.reward = details.reward;
-    if (!!self.reward && self.reward.indexOf("Title") === -1) console.log(self.reward);
     self.accountWide = details.accountWide;
     self.criteria = _.map(details.criteria, function(c) {
         return new Criterion(c);
